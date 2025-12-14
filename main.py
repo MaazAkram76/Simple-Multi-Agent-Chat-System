@@ -1,24 +1,17 @@
+# main.py
 from agents.coordinator import Coordinator
 
 if __name__ == "__main__":
-    print("--- System Starting ---")
-    
-    # 1. Initialize the system
+    # 1. Start the System
     app = Coordinator()
     
-    # 2. TEST: Manually add some data to memory
-    print("\n--- Testing Memory Storage ---")
-    app.memory.add_memory("Python Arrays", "Lists are mutable arrays in Python.", source="Test")
-    app.memory.add_memory("Java Arrays", "Arrays in Java have fixed size.", source="Test")
+    # 2. First User Query (System doesn't know this yet)
+    print("\n--- USER QUERY 1: 'What are transformers?' ---")
+    response1 = app.process_query("transformers")
+    print(f"\nFINAL OUTPUT:\n{response1}")
     
-    # 3. TEST: Search for that data
-    print("\n--- Testing Memory Search ---")
-    query = "tell me about Python arrays"
-    results = app.memory.search_memory(query)
-    
-    # 4. Print results
-    if results:
-        print(f"Query: '{query}'")
-        print(f"Best Match: {results[0]['fact']} (Score: {results[0]['score']:.2f})")
-    else:
-        print("No matches found.")
+    # 3. Second User Query (Asking the SAME thing to test Memory)
+    # The Coordinator should find this in memory and SKIP the research step.
+    print("\n--- USER QUERY 2: 'Explain transformers' ---")
+    response2 = app.process_query("Explain transformers architecture")
+    print(f"\nFINAL OUTPUT:\n{response2}")

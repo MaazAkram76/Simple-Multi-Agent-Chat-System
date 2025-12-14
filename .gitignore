@@ -1,0 +1,9 @@
+# Security: Never commit environment variables
+.env
+
+# Python: Ignore compiled files
+__pycache__/
+*.pyc
+
+# OS: Ignore system files
+.DS_Store

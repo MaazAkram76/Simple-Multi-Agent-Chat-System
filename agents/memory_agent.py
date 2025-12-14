@@ -1,21 +1,19 @@
 import time
-import json
-# specialized library for semantic search
+# We use this library for the "Real" AI search (converting text to numbers)
 from sentence_transformers import SentenceTransformer, util
 
 class MemoryAgent:
     def __init__(self):
         print("Memory Agent: Loading embedding model (this may take a moment)...")
-        # Load a pre-trained model for creating embeddings
+        # Load the lightweight AI model 'all-MiniLM-L6-v2'
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         
-        # 1. Knowledge Base: Stores dictionary with text and pre-computed embedding
+        # 1. Knowledge Base: Stores facts with their vector embeddings
         # Format: {"fact": "...", "embedding": tensor, "metadata": {...}}
         self.knowledge_base = [] 
         
-        # 2. Conversation History
+        # 2. Conversation History: Stores raw chat logs
         self.conversations = [] 
-        
         print("Memory Agent: Ready.")
         
     def add_memory(self, topic, fact, source="User"):
@@ -38,7 +36,7 @@ class MemoryAgent:
         Performs semantic search using Cosine Similarity.
         Args:
             query (str): The user's search text.
-            threshold (float): Minimum similarity score (0 to 1) to return a result.
+            threshold (float): Minimum similarity score (0.0 to 1.0) to return a result.
         """
         if not self.knowledge_base:
             return []
